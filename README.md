@@ -42,3 +42,56 @@ Redirecting to /bin/systemctl restart nfs-server.service
 You have new mail in /var/spool/mail/root
 ```
 
+
+```
+[jkozik@dell2 ~]$ git clone https://github.com/jkozik/k8sNw.com
+Cloning into 'k8sNw.com'...
+remote: Enumerating objects: 13, done.
+remote: Counting objects: 100% (13/13), done.
+remote: Compressing objects: 100% (9/9), done.
+remote: Total 13 (delta 1), reused 7 (delta 1), pack-reused 0
+Unpacking objects: 100% (13/13), done.
+
+[jkozik@dell2 ~]$ cd k8sNw.com
+[jkozik@dell2 k8sNw.com]$ ls
+nwcom-deploy.yml  nwcom-ingress.yml  nwcom-pvc.yml  nwcom-pv.yml  nwcom-svc.yml  README.md
+
+[jkozik@dell2 k8sNw.com]$ kubectl apply -f .
+deployment.apps/nwcom created
+ingress.networking.k8s.io/nwcom-ingress created
+persistentvolume/nwcom-persistent-storage created
+persistentvolumeclaim/nwcom-persistent-storage created
+service/nwcom created
+
+[jkozik@dell2 k8sNw.com]$ kubectl get service,deployment,ingress,pv,pvc
+NAME                      TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+service/nwcom             NodePort    10.100.137.46    <none>        80:31241/TCP   84s
+
+NAME                                  READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/nwcom                 1/1     1            1           86s
+
+NAME                                                CLASS    HOSTS                     ADDRESS           PORTS   AGE
+ingress.networking.k8s.io/nwcom-ingress             <none>   napervilleweather.com     192.168.100.174   80      86s
+
+NAME                                            CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM                                  STORAGECLASS   REASON   AGE
+persistentvolume/nwcom-persistent-storage       1Gi        ROX            Retain           Bound    default/nwcom-persistent-storage       nfs                     84s
+
+NAME                                                 STATUS   VOLUME                         CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+persistentvolumeclaim/nwcom-persistent-storage       Bound    nwcom-persistent-storage       1Gi        ROX            nfs            84s
+
+[jkozik@dell2 k8sNw.com]$ curl napervilleweather.com | head
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <!-- ##### start AJAX mods ##### -->
+    <script type="text/javascript" src="ajaxCUwx.js"></script>
+    <!-- AJAX updates by Ken True - http://saratoga-weather.org/wxtemplates/ -->
+    <script type="text/javascript" src="ajaxgizmo.js"></script>
+    <script type="text/javascript" src="language-en.js"></script>
+        <!-- language for AJAX script included -->
+100  8004    0  8004    0     0  30102      0 --:--:-- --:--:-- --:--:-- 30090
+    
+```
