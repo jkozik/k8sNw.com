@@ -92,6 +92,9 @@ persistentvolume/nwcom-persistent-storage       1Gi        ROX            Retain
 NAME                                                 STATUS   VOLUME                         CAPACITY   ACCESS MODES   STORAGECLASS   AGE
 persistentvolumeclaim/nwcom-persistent-storage       Bound    nwcom-persistent-storage       1Gi        ROX            nfs            84s
 ```
+## HomeLAN NATing from external IP address / port 80 to cluster's LAN address and ingress controller's port number.
+So, on my home LAN http://192.168.100.174:30410 is where incoming web traffic enters.  The ingress controller parses for napervilleweather.com and redirects the traffic to the nwcom service. I have an external IP address for my home LAN that gets NAT'd by my home router to 192.168.100.174.  On that NAT box, I map port 80 to port 30410. As you can see from the get ingress command, I also am running a wordpress application with another URL, but also mapped to the same IP address and port number.  The ingress control does a reverse proxy function and splits the wordpress traffic off to the nginx-wordpress-ingress resource.
+
 ## Check the web page http://napervilleweather.com
 ```
 [jkozik@dell2 k8sNw.com]$ curl napervilleweather.com | head
