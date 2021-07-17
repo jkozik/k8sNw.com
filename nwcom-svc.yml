@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nwcom
+  labels:
+    app: nwcom
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: nwcom
+  type: NodePort
