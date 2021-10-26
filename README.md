@@ -113,3 +113,33 @@ So, on my home LAN http://192.168.100.174:30410 is where incoming web traffic en
 100  8004    0  8004    0     0  30102      0 --:--:-- --:--:-- --:--:-- 30090
     
 ```
+## add tls to ingress, enable https://napervilleweather.com
+In the [create certificate](https://github.com/jkozik/SetupKubeadmCentos7/blob/main/TLS%20using%20cert-manager.md#create-a-certificate)[TLS using cert-manager](https://github.com/jkozik/SetupKubeadmCentos7/blob/main/TLS%20using%20cert-manager.md) section of my [Kubernetes Setup](https://github.com/jkozik/SetupKubeadmCentos7) repository, I show the steps to enable the cert-manager for my cluster.  Given that it is setup, adding support for tls to the napervilleweather.com site is as easy as adding a few lines to the ingress resource.  
+```
+[jkozik@dell2 k8sNw.com]$ cat nwcom-ingress-tls.yml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nwcom-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+  - hosts:
+    - napervilleweather.com
+    secretName: napervilleweather-com-tls
+  rules:
+  - host: napervilleweather.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nwcom
+            port:
+              number: 80
+[jkozik@dell2 k8sNw.com]$
+```
+Going forward, apply the nwcom-ingress-tls.yml resource and not the nwcom-ingress.yml one.
