@@ -22,3 +22,13 @@ spec:
             name: nwcom
             port:
               number: 80
+  #- host: www.napervilleweather.com
+    #http:
+      #paths:
+      #- path: /
+        #pathType: Prefix
+        #backend:
+          #service:
+            #name: nwcom
+            #port:
+              #number: 80
