@@ -16,7 +16,7 @@ spec:
         app: nwcom
     spec:
       containers:
-      - image: jkozik/nw.com:v1.3
+      - image: jkozik/nw.com:v1.5
         name: nwcom
         ports:
         - containerPort: 80
