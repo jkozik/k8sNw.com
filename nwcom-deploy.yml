@@ -20,7 +20,7 @@ spec:
         app: nwcom
     spec:
       containers:
-      - image: jkozik/nw.com:v1.11
+      - image: jkozik/nw.com:v1.12
         name: nwcom
         imagePullPolicy: IfNotPresent
         resources:
