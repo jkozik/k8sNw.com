@@ -19,8 +19,15 @@ spec:
       labels:
         app: nwcom
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchLabels:
+                app: nwcom
+            topologyKey: kubernetes.io/hostname      
       containers:
-      - image: jkozik/nw.com:v1.13b
+      - image: jkozik/nw.com:v1.14
         name: nwcom
         imagePullPolicy: IfNotPresent
         resources:
